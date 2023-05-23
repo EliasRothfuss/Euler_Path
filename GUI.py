@@ -36,17 +36,15 @@ def create_graph():
     nx.draw(G, pos, with_labels=True, node_color='skyblue', node_size=500, edge_color='gray')
 
 path_obj = Euler_path.pathfinder(adj_matrix)
-path = path_obj.built_path()
-path = [e + 1 for e in path]
-print (path)
+path_obj.built_path_pre()
 def animate_path(frame):
-    if frame < len(path)-1:
-        path_edges = list(zip(path[:-1], path[1:frame+2]))
-        nx.draw_networkx_edges(G, pos, edgelist=path_edges, edge_color='red', width=2.0)
-    else: 
-        plt.clf()  # Clear the current plot
-        create_graph()
+    plt.clf()  # Clear the current plot
+    create_graph()
+    path = path_obj.built_path_sub()
+    path = [e + 1 for e in path]
+    path_edges = list(zip(path[:-1], path[1:]))
+    nx.draw_networkx_edges(G, pos, edgelist=path_edges, edge_color='red', width=2.0)
 
 create_graph()
-ani = FuncAnimation(fig, animate_path, frames=len(path), interval=1000, repeat=True)
+ani = FuncAnimation(fig, animate_path, frames=10, interval=1000, repeat=False)
 plt.show()
