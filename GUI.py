@@ -4,9 +4,6 @@ import networkx as nx
 import Euler_path
 import adjacency_matrix
 
-#auto mode
-#adj_matrix, euler_path = adjacency_matrix.create_adj_matrix(5,10)
-#print(euler_path)
 
 # Define the adjacency matrix
 adj_matrix = [
@@ -35,13 +32,13 @@ pos = nx.spring_layout(G)
 def create_graph():
     nx.draw(G, pos, with_labels=True, node_color='skyblue', node_size=500, edge_color='gray')
 
+# Create a Pathfinder instance
 path_obj = Euler_path.pathfinder(adj_matrix[:])
-path_obj.built_path_pre()
 def animate_path(frame):
     if frame >0:
         plt.clf()  # Clear the current plot
         create_graph()
-        path = path_obj.built_path_sub()
+        path = path_obj.built_path_step()
         path = [e + 1 for e in path]
         path_edges = list(zip(path[:-1], path[1:]))
         nx.draw_networkx_edges(G, pos, edgelist=path_edges, edge_color='red', width=2.0)
