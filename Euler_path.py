@@ -1,23 +1,26 @@
 import random
+import copy
 
 class pathfinder:
     def __init__(self, matrix):
         self.point_vis = list()
-        self.matrix = matrix
+        self.matrix = copy.copy(matrix)
+        #print(id(self.matrix), id(matrix))
         self.forbidden_nextpoint = None
 
     def restore_Cotent(self):
-        matrix[self.point_vis[-1]][self.point_vis[-2]] = 1
-        matrix[self.point_vis[-2]][self.point_vis[-1]] = 1
+        self.matrix[self.point_vis[-1]][self.point_vis[-2]] = 1
+        self.matrix[self.point_vis[-2]][self.point_vis[-1]] = 1
 
     def get_nextpoint(self, point):
         indices = list()
         for i,e in enumerate(self.matrix[point]):
             if e == 1 and i != self.forbidden_nextpoint:
                 indices.append(i)
+        print(point +1 , [i+1 for i in indices])
         if indices:
-            return random.choice(indices)
-            #return indices[0]
+            #return random.choice(indices)
+            return indices[-1]
         else:
             return None
 
@@ -29,7 +32,7 @@ class pathfinder:
         if indices:
             return indices[0]
         else:
-            return None
+            return 0
 
     def built_path_pre(self, point_ = None):
         if point_ is None:
